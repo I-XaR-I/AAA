@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseFlow - Modern Expense Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+</head>
+<body>
+    <!-- Floating particles for visual enhancement -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <main class="auth-container">
+        <section class="form-section">
+            <form id="signup-form" class="form-card active" novalidate>
+                <h2>Create Your Company Account</h2>
+                <div class="input-group">
+                    <label for="signup-company-name" class="sr-only">Company Name</label>
+                    <input 
+                        type="text" 
+                        id="signup-company-name" 
+                        placeholder="Company Name" 
+                        required
+                        autocomplete="organization"
+                        aria-label="Enter your company name"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-email" class="sr-only">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="signup-email" 
+                        placeholder="Email Address" 
+                        required
+                        autocomplete="email"
+                        aria-label="Enter your email address"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-password" class="sr-only">Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-password" 
+                        placeholder="Create Password" 
+                        required
+                        autocomplete="new-password"
+                        aria-label="Create a secure password"
+                        minlength="8"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-confirm-password" class="sr-only">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-confirm-password" 
+                        placeholder="Confirm Password" 
+                        required
+                        autocomplete="new-password"
+                        aria-label="Confirm your password"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="signup-country-selection" class="sr-only">Country</label>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select" id="signup-country-selection" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="country-label">
+                            <span class="custom-select-trigger">Select Country</span>
+                            <div class="custom-select-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="custom-options" role="listbox">
+                            <div class="custom-option" data-value="">Select Country</div>
+                        </div>
+                        <input type="hidden" id="signup-country-selection-input" name="country" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <span class="btn-text">Create Account</span>
+                </button>
+                
+                <div class="form-footer">
+                    <p>
+                        Already have an account? 
+                        <button type="button" class="link-btn" onclick="toggleForm('login')" aria-label="Switch to login form">
+                            Sign In
+                        </button>
+                    </p>
+                </div>
+            </form>
+
+            <form id="login-form" class="form-card" novalidate>
+                <h2>Welcome Back</h2>
+                
+                <div class="input-group">
+                    <label for="login-email" class="sr-only">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="login-email" 
+                        placeholder="Email Address" 
+                        required
+                        autocomplete="email"
+                        aria-label="Enter your email address"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password" class="sr-only">Password</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        placeholder="Password" 
+                        required
+                        autocomplete="current-password"
+                        aria-label="Enter your password"
+                    >
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <span class="btn-text">Sign In</span>
+                </button>
+                
+                <div class="form-footer">
+                    <p>
+                        Don't have an account? 
+                        <button type="button" class="link-btn" onclick="toggleForm('signup')" aria-label="Switch to signup form">
+                            Create Account
+                        </button>
+                    </p>
+                    <p>
+                        <button type="button" class="link-btn" aria-label="Reset password">
+                            Forgot your password?
+                        </button>
+                    </p>
+                </div>
+            </form>
+        </section>
+        
+        <div id="message" class="message" role="alert" aria-live="polite"></div>
+    </main>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

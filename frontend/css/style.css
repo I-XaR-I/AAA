@@ -1,0 +1,1019 @@
+/* Modern CSS Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Modern Color Palette */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --error-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    
+    /* Neutral Colors */
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #16213e;
+    --surface-glass: rgba(255, 255, 255, 0.1);
+    --surface-glass-hover: rgba(255, 255, 255, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8d1;
+    --text-muted: #8b8ba7;
+    
+    /* Shadows and Effects */
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 16px 64px rgba(0, 0, 0, 0.15);
+    --shadow-strong: 0 24px 96px rgba(0, 0, 0, 0.2);
+    --blur-backdrop: blur(20px);
+    
+    /* Animation Timing */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated Background Elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.form-section {
+    position: relative;
+    min-height: 600px;
+}
+
+.form-card {
+    background: var(--surface-glass);
+    backdrop-filter: var(--blur-backdrop);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow-medium);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all var(--transition-medium);
+    width: 100%;
+}
+
+.form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.form-card.active {
+    transform: translateY(0);
+    opacity: 1;
+    display: block;
+}
+
+.form-card.active::before {
+    opacity: 1;
+}
+
+.form-card:not(.active) {
+    display: none;
+}
+
+/* Form Elements */
+h2 {
+    text-align: center;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+/* Input Styling */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+select {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    background: var(--surface-glass);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    backdrop-filter: var(--blur-backdrop);
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+select:focus {
+    outline: none;
+    border-color: rgba(102, 126, 234, 0.5);
+    background: var(--surface-glass-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+input::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Custom Select Dropdown */
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    user-select: none;
+    background-image: none !important; /* Remove any inherited background image */
+}
+
+.custom-select:hover {
+    background: rgba(255, 255, 255, 0.05);
+    background-image: none !important; /* Ensure no background image on hover */
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+}
+
+.custom-select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    background-image: none !important; /* Ensure no background image on focus */
+    box-shadow: 
+        0 0 0 1px rgba(139, 92, 246, 0.5),
+        0 0 30px rgba(139, 92, 246, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.custom-select.open {
+    background-image: none !important; /* Ensure no background image when open */
+    box-shadow: 
+        0 0 0 1px rgba(139, 92, 246, 0.5),
+        0 0 30px rgba(139, 92, 246, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.custom-select-trigger {
+    flex: 1;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.custom-select-trigger.placeholder {
+    color: var(--text-muted);
+}
+
+.custom-select-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.custom-select.open .custom-select-arrow {
+    transform: rotate(180deg);
+    color: rgba(139, 92, 246, 0.8);
+}
+
+.custom-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 30, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(139, 92, 246, 0.3),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.custom-select.open + .custom-options {
+    max-height: 180px; /* Shows exactly 3 options (60px each) */
+    opacity: 1;
+    transform: translateY(0);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbar but keep functionality */
+.custom-options::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.custom-options {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.custom-option {
+    padding: 16px 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 15px;
+    font-weight: 500;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+}
+
+.custom-option:first-child {
+    border-radius: 12px 12px 0 0;
+}
+
+.custom-option:last-child {
+    border-radius: 0 0 12px 12px;
+}
+
+.custom-option:hover {
+    background: rgba(139, 92, 246, 0.3);
+    color: #fff;
+}
+
+.custom-option.selected {
+    background: rgba(139, 92, 246, 0.5);
+    color: #fff;
+    font-weight: 600;
+}
+
+.custom-option:active {
+    background: rgba(139, 92, 246, 0.6);
+}
+
+/* Animation for dropdown opening */
+@keyframes customDropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Existing select styling (keeping for fallback) */
+select {
+    cursor: pointer;
+    /* Completely remove all default styling */
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    
+    /* Modern translucent design */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    padding-right: 45px;
+    
+    /* Custom arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    
+    /* Firefox specific fixes */
+    text-indent: 0.01px;
+    text-overflow: '';
+    
+    /* Ensure clean rendering */
+    background-clip: padding-box;
+}
+
+/* Remove all possible default arrows and styling */
+select::-ms-expand {
+    display: none !important;
+}
+
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+/* Remove any default dropdown button styling */
+select::-webkit-calendar-picker-indicator {
+    -webkit-appearance: none !important;
+    display: none !important;
+}
+
+/* Additional browser-specific overrides */
+select::-webkit-list-button {
+    -webkit-appearance: none !important;
+    display: none !important;
+}
+
+/* Edge/IE specific */
+select::-ms-value {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+/* Ensure no default focus styling interferes */
+select:focus::-ms-value {
+    background: transparent !important;
+}
+
+/* Specific targeting for the country dropdown */
+#signup-country-selection {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    /* Custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.5) transparent;
+    
+    /* Arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 45px;
+}
+
+/* Additional overrides for stubborn browsers */
+#signup-country-selection::-webkit-appearance,
+#signup-country-selection::-moz-appearance {
+    display: none !important;
+}
+
+#signup-country-selection::-ms-expand {
+    display: none !important;
+}
+
+#signup-country-selection::-webkit-calendar-picker-indicator,
+#signup-country-selection::-webkit-list-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+
+select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 0 0 1px rgba(139, 92, 246, 0.5),
+        0 0 30px rgba(139, 92, 246, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(139,92,246,0.8)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+select:hover {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.8)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Custom dropdown styling for better appearance */
+select option {
+    background: rgba(20, 20, 30, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+select option:hover {
+    background: rgba(139, 92, 246, 0.3);
+    color: #fff;
+}
+
+select option:checked {
+    background: rgba(139, 92, 246, 0.5);
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Custom scrollbar for select dropdown */
+select::-webkit-scrollbar {
+    width: 8px;
+}
+
+select::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+select::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.7);
+}
+
+/* Dropdown animation */
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+select:focus {
+    animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:active {
+    transform: translateY(0);
+    transition: transform var(--transition-fast);
+}
+
+/* Loading State */
+button.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Link Styling */
+a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transition: width var(--transition-medium);
+}
+
+a:hover {
+    color: var(--text-primary);
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* Message Styling */
+.error-message, .success-message {
+    text-align: center;
+    margin-top: 16px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    backdrop-filter: var(--blur-backdrop);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideInUp var(--transition-bounce);
+}
+
+.error-message {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.success-message {
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Transition Animations */
+.form-card.slide-out-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.form-card.slide-out-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.form-card.slide-in-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.form-card.slide-in-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 16px;
+    }
+    
+    .form-card {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+    
+    h2 {
+        font-size: 24px;
+        margin-bottom: 28px;
+    }
+    
+    input[type="text"], 
+    input[type="email"], 
+    input[type="password"], 
+    select {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+    
+    button {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+
+/* Floating Particles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 20s;
+}
+
+.particle:nth-child(2) {
+    left: 30%;
+    animation-delay: 2s;
+    animation-duration: 18s;
+}
+
+.particle:nth-child(3) {
+    left: 50%;
+    animation-delay: 4s;
+    animation-duration: 22s;
+}
+
+.particle:nth-child(4) {
+    left: 70%;
+    animation-delay: 6s;
+    animation-duration: 16s;
+}
+
+.particle:nth-child(5) {
+    left: 90%;
+    animation-delay: 8s;
+    animation-duration: 24s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Form Section */
+.form-section {
+    position: relative;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input:focus + label,
+.input-group select:focus + label {
+    transform: translateY(-8px) scale(0.85);
+    color: rgba(102, 126, 234, 0.8);
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Button Enhancements */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+    transition: transform var(--transition-fast);
+}
+
+.btn-primary:hover .btn-text {
+    transform: translateY(-1px);
+}
+
+/* Form Footer */
+.form-footer {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.form-footer p {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+}
+
+.form-footer p:last-child {
+    margin-bottom: 0;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-fast);
+    font-size: inherit;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 0;
+    width: auto;
+}
+
+.link-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: all var(--transition-medium);
+    z-index: -1;
+}
+
+.link-btn:hover {
+    color: var(--text-primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.link-btn:hover::after {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Message Styling Updates */
+.message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    backdrop-filter: var(--blur-backdrop);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideInUp var(--transition-bounce);
+    transition: all var(--transition-medium);
+    min-height: auto;
+}
+
+.message:empty {
+    display: none;
+}
+
+.message.error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border-color: rgba(255, 107, 107, 0.2);
+}
+
+.message.success {
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    border-color: rgba(81, 207, 102, 0.2);
+}
+
+/* Form Transition Animations */
+.form-card.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.form-card:not(.active) {
+    display: none;
+}
+
+.form-card.slide-out-left {
+    transform: translateX(-100%) scale(0.95);
+    opacity: 0;
+}
+
+.form-card.slide-in-right {
+    transform: translateX(100%) scale(0.95);
+    opacity: 0;
+}
+
+/* Input Focus Animations */
+input:focus,
+select:focus {
+    transform: translateY(-2px) scale(1.02);
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: rgba(81, 207, 102, 0.5);
+}
+
+input:invalid:not(:placeholder-shown) {
+    border-color: rgba(255, 107, 107, 0.5);
+}
+
+/* Loading States */
+.btn-primary.loading .btn-text {
+    opacity: 0;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 3;
+}
+
+/* Micro-interactions */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.btn-primary:active {
+    animation: pulse 0.2s ease-in-out;
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-primary: #f8fafc;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #f1f5f9;
+        --surface-glass: rgba(255, 255, 255, 0.8);
+        --surface-glass-hover: rgba(255, 255, 255, 0.9);
+        --text-primary: #1e293b;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+    }
+    
+    body::before {
+        background: 
+            radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(240, 147, 251, 0.05) 0%, transparent 50%);
+    }
+    
+    .particle {
+        background: var(--accent-gradient);
+    }
+}
