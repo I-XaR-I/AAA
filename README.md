@@ -3,15 +3,15 @@
 ## Project Information
 
 ### Team Details
-- **Team Name:** [Your Team Name]
+- **Team Name:** HackHorizons
 - **Team Members:**
-  - [Avighn Kumar Lakhpuria] 
-  - [Ankit Kumar] 
-  - [Aakash Kumar Dubey] 
+  - Avighn Kumar Lakhpuria
+  - Ankit Kumar
+  - Aakash Kumar Dubey
 
 ### Project Metadata
 - **Problem Statement:** Expense Management System
-- **Reviewer Name:** [Reviewer Name]
+- **Reviewer Name:** Aman Patel
 - **Video Presentation Link:** [Insert YouTube/Drive Link Here]
 
 ---
