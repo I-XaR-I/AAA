@@ -288,6 +288,126 @@ input::placeholder {
     color: var(--text-muted);
 }
 
+/* Modern Date Input Styling */
+input[type="date"] {
+    position: relative;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: var(--surface-glass);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    backdrop-filter: var(--blur-backdrop);
+    cursor: pointer;
+    
+    /* Keep minimal appearance changes for better compatibility */
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+}
+
+/* Style the calendar picker indicator */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(1);
+    opacity: 0.7;
+    transition: opacity var(--transition-fast);
+    padding: 4px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+input[type="date"]:focus {
+    outline: none;
+    border-color: rgba(102, 126, 234, 0.5);
+    background: var(--surface-glass-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+input[type="date"]:hover {
+    background: var(--surface-glass-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Style the date text */
+input[type="date"]::-webkit-datetime-edit {
+    color: var(--text-primary);
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    color: var(--text-primary);
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+    color: var(--text-muted);
+    padding: 0 2px;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    color: var(--text-primary);
+}
+
+/* Placeholder-like styling when empty */
+input[type="date"]:not(:focus):invalid {
+    color: var(--text-muted);
+}
+
+/* File input styling for receipts */
+input[type="file"] {
+    position: relative;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: var(--surface-glass);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    backdrop-filter: var(--blur-backdrop);
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    background: var(--surface-glass-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+input[type="file"]:focus {
+    outline: none;
+    border-color: rgba(102, 126, 234, 0.5);
+    background: var(--surface-glass-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+input[type="file"]::file-selector-button {
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    background: rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: rgba(102, 126, 234, 0.3);
+    transform: translateY(-1px);
+}
+
 /* Custom Select Dropdown - Matching Auth Page */
 .custom-select-wrapper {
     position: relative;

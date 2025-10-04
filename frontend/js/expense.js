@@ -168,6 +168,42 @@ function loadExpenseSubmissionForm() {
         </div>
 
         <section class="expense-form-section">
+            <!-- AI OCR Feature (Coming Soon) -->
+            <div class="ai-ocr-section" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Coming Soon
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                        🤖
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.25rem;">AI-Powered Receipt Scanner</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Upload a receipt and let AI extract expense details automatically</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button type="button" class="btn-secondary" style="flex: 1; background: rgba(102, 126, 234, 0.2); cursor: not-allowed; opacity: 0.6;" disabled>
+                        <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            Scan Receipt with AI
+                        </span>
+                    </button>
+                    <div style="padding: 0.75rem 1.25rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">📸 Camera • 🖼️ Gallery • 📄 PDF</span>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(79, 172, 254, 0.1); border-radius: 12px; border-left: 3px solid #4facfe;">
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">
+                        <strong>✨ AI OCR will automatically extract:</strong> Vendor name, date, amount, items, and more from your receipt images.
+                    </p>
+                </div>
+            </div>
+
             <form id="expense-submission-form" novalidate>
                 <div class="input-group">
                     <label for="expense-description">Description</label>
