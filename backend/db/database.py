@@ -28,4 +28,10 @@ def init_db():
     Base.metadata.create_all(bind=engine)
     print("Database tables initialized successfully.")
 
+def reset_db():
+    """Drops all tables and recreates them. USE WITH CAUTION - DELETES ALL DATA!"""
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    print("Database reset successfully. All tables recreated.")
+
 # Run init_db() on application startup (will be called from main.py)

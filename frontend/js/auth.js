@@ -75,11 +75,39 @@ function displayMessage(text, isError = true) {
     }
 }
 
-function storeAuthToken(token) {
+function storeAuthTokenAndUser(token, user) {
     localStorage.setItem('auth_token', token);
+    
+    // Fetch company details to get currency
+    fetch(`${API_BASE_URL}/auth/managers`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Get company info from any user (they all share same company)
+        if (data && data.length > 0 && data[0].company_id) {
+            // Fetch company details
+            return fetch(`${API_BASE_URL}/companies/${data[0].company_id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        }
+        throw new Error('No company data');
+    })
+    .then(response => response.json())
+    .then(company => {
+        user.company_currency = company.default_currency_code;
+        localStorage.setItem('user_data', JSON.stringify(user));
+    })
+    .catch(error => {
+        console.log('Could not fetch company currency, using default');
+        // Store user data without company currency
+        localStorage.setItem('user_data', JSON.stringify(user));
+    });
 }
-
-// --- API Call Handlers ---
 
 // --- API Call Handlers ---
 
@@ -296,7 +324,7 @@ async function handleSignup(event) {
     submitButton.disabled = true;
     
     try {
-        const response = await fetch(`${API_BASE_URL}/signup`, {
+        const response = await fetch(`${API_BASE_URL}/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -307,7 +335,7 @@ async function handleSignup(event) {
         const data = await response.json();
         
         if (response.ok) {
-            storeAuthToken(data.access_token);
+            storeAuthTokenAndUser(data.access_token, data.user);
             displayMessage("Account created successfully! Redirecting...", false);
             
             // Add a small delay before redirect for better UX
@@ -345,19 +373,18 @@ async function handleLogin(event) {
     submitButton.disabled = true;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/login`, {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
-            // FastAPI expects form-encoded data for standard token login
-            body: `username=${email}&password=${password}`
+            body: JSON.stringify({ email, password })
         });
 
         const data = await response.json();
         
         if (response.ok) {
-            storeAuthToken(data.access_token);
+            storeAuthTokenAndUser(data.access_token, data.user);
             displayMessage("Welcome back! Redirecting...", false);
             
             // Add a small delay before redirect for better UX

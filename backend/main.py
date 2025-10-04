@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db.database import init_db
-
-# Assuming you'll have routers defined
-# from .routers import auth, expenses, approvals
+from .routers import auth
+from .routers import expenses
+from .routers import rules
+from .routers import companies
 
 app = FastAPI(
     title="Expense Management API",
@@ -14,7 +15,13 @@ app = FastAPI(
 # CORS Middleware Setup (Essential for Frontend/Backend communication)
 origins = [
     "http://localhost",
-    "http://localhost:8000", # Example frontend port
+    "http://localhost:3000",
+    "http://localhost:5500",
+    "http://localhost:5501",
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501",
     "http://127.0.0.1:8000",
     # Add your frontend URL/domain here when deployed
 ]
@@ -36,4 +43,8 @@ def on_startup():
 def read_root():
     return {"message": "Expense Management API is running"}
 
-# Include routers here when ready (e.g., app.include_router(auth.router))
+# Include routers
+app.include_router(auth.router)
+app.include_router(expenses.router)
+app.include_router(rules.router)
+app.include_router(companies.router)

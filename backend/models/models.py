@@ -28,10 +28,14 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     name = Column(String, nullable=False)
     role = Column(String, nullable=False) # 'Admin', 'Manager', 'Employee'
+    hashed_password = Column(String, nullable=False)  # Added for authentication
     
     # Manager relationship (self-referential)
     manager_id = Column(Integer, ForeignKey('users.user_id'))
     is_manager_approver = Column(Boolean, default=False) # 1 or 0 in SQLite, mapped to Boolean
+
+    # Link to approval rule
+    approval_rule_id = Column(Integer, ForeignKey('approval_rules.rule_id'))
 
     # Relationships
     company = relationship("Company", back_populates="users")
@@ -39,6 +43,7 @@ class User(Base):
     subordinates = relationship("User", back_populates="manager")
     expenses = relationship("Expense", back_populates="employee")
     approvals = relationship("ExpenseApproval", back_populates="approver")
+    approval_rule = relationship("ApprovalRule", foreign_keys=[approval_rule_id])
 
 
 class ExpenseCategory(Base):
@@ -111,10 +116,40 @@ class ApprovalRule(Base):
     description = Column(String)
     is_active = Column(Boolean, default=True, nullable=False)
     threshold_amount = Column(Float, default=0.0)
-
+    approval_percentage = Column(Float, default=100.0)  # Percentage of normal approvers needed (0-100)
+    
     # Relationships
     company = relationship("Company", back_populates="rules")
-    flow_steps = relationship("ApprovalFlowStep", back_populates="rule", cascade="all, delete-orphan")
+    required_approvers = relationship("RuleRequiredApprover", back_populates="rule", cascade="all, delete-orphan")
+    normal_approvers = relationship("RuleNormalApprover", back_populates="rule", cascade="all, delete-orphan")
+
+
+class RuleRequiredApprover(Base):
+    """Required approvers who must approve before normal approvers."""
+    __tablename__ = 'rule_required_approvers'
+    
+    id = Column(Integer, primary_key=True, index=True)
+    rule_id = Column(Integer, ForeignKey('approval_rules.rule_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    sequence = Column(Integer, nullable=False, default=0)  # All required approvers get notified together
+    
+    # Relationships
+    rule = relationship("ApprovalRule", back_populates="required_approvers")
+    user = relationship("User", foreign_keys=[user_id])
+
+
+class RuleNormalApprover(Base):
+    """Normal approvers who approve in sequence after required approvers."""
+    __tablename__ = 'rule_normal_approvers'
+    
+    id = Column(Integer, primary_key=True, index=True)
+    rule_id = Column(Integer, ForeignKey('approval_rules.rule_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    sequence = Column(Integer, nullable=False)  # Order in which they approve
+    
+    # Relationships
+    rule = relationship("ApprovalRule", back_populates="normal_approvers")
+    user = relationship("User", foreign_keys=[user_id])
 
 
 class ApprovalFlowStep(Base):
@@ -124,11 +159,10 @@ class ApprovalFlowStep(Base):
     step_id = Column(Integer, primary_key=True, index=True)
     rule_id = Column(Integer, ForeignKey('approval_rules.rule_id'), nullable=False)
     step_sequence = Column(Integer, nullable=False)
-    approver_type = Column(String, nullable=False) # 'Manager', 'Role', 'SpecificUser', 'Conditional'
-    target_value = Column(String) # User ID, Role name (Finance), or rule definition
+    approver_type = Column(String, nullable=False) # 'Required', 'Normal'
+    target_value = Column(String) # User ID
 
     # Relationships
-    rule = relationship("ApprovalRule", back_populates="flow_steps")
     expense_approvals = relationship("ExpenseApproval", back_populates="flow_step")
 
 
