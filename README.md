@@ -5,10 +5,9 @@
 ### Team Details
 - **Team Name:** [Your Team Name]
 - **Team Members:**
-  - [Member 1 Name] - [Role/Responsibility]
-  - [Member 2 Name] - [Role/Responsibility]
-  - [Member 3 Name] - [Role/Responsibility]
-  - [Add more members as needed]
+  - [Avighn Kumar Lakhpuria] 
+  - [Ankit Kumar] 
+  - [Aakash Kumar Dubey] 
 
 ### Project Metadata
 - **Problem Statement:** Expense Management System
@@ -573,7 +572,3 @@ Feel free to fork this repository, experiment with the code and adapt it to your
 
 ---
 
-
-## Contact
-
-[Add contact information or links to team member profiles here]
